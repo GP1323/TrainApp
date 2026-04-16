@@ -1,24 +1,32 @@
-import java.util.Arrays;
-
-public class TrainAppUC17 {
+public class TrainAppUC18 {
     public static void main(String[] args) {
 
-        // Bogie type names
-        String[] bogieNames = {
-                "Sleeper",
-                "AC Chair",
-                "First Class",
-                "General",
-                "Luxury"
+        // Bogie IDs (unsorted array)
+        String[] bogieIds = {
+                "BG101",
+                "BG205",
+                "BG309",
+                "BG412",
+                "BG550"
         };
 
-        System.out.println("Before Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
+        // Search key
+        String searchKey = "BG309";
 
-        // Built-in sorting (no manual logic)
-        Arrays.sort(bogieNames);
+        boolean found = false;
 
-        System.out.println("\nAfter Sorting:");
-        System.out.println(Arrays.toString(bogieNames));
+        // Linear Search
+        for (int i = 0; i < bogieIds.length; i++) {
+
+            if (bogieIds[i].equals(searchKey)) {
+                found = true;
+                System.out.println("Bogie " + searchKey + " FOUND at index " + i);
+                break; // early termination
+            }
+        }
+
+        if (!found) {
+            System.out.println("Bogie " + searchKey + " NOT FOUND");
+        }
     }
 }
