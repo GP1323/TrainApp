@@ -1,5 +1,5 @@
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 // Bogie class
 class Bogie {
@@ -13,7 +13,7 @@ class Bogie {
 
     @Override
     public String toString() {
-        return name + " (" + capacity + ")";
+        return name + "(" + capacity + ")";
     }
 }
 
@@ -23,25 +23,25 @@ public class TrainApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Original list (same as UC7)
+        // Reusing bogie list
         List<Bogie> bogies = new ArrayList<>();
+
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
+        bogies.add(new Bogie("Sleeper", 80));
         bogies.add(new Bogie("First Class", 40));
+        bogies.add(new Bogie("AC Chair", 60));
 
-        // Filter bogies with capacity > 60
-        List<Bogie> filtered = bogies.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // Group bogies by name (type)
+        Map<String, List<Bogie>> groupedBogies =
+                bogies.stream()
+                        .collect(Collectors.groupingBy(b -> b.name));
 
-        // Display filtered bogies
-        System.out.println("\nFiltered Bogies (capacity > 60):");
-        for (Bogie b : filtered) {
-            System.out.println(b);
+        // Display grouped result
+        System.out.println("\nGrouped Bogies:");
+
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
         }
-
-        // Show original list unchanged
-        System.out.println("\nOriginal List:");
-        System.out.println(bogies);
     }
 }
