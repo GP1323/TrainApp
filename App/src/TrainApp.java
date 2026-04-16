@@ -1,54 +1,43 @@
-import java.util.Arrays;
+public class TrainAppUC20 {
 
-public class TrainAppUC19 {
+    // Search method with validation
+    public static boolean searchBogie(String[] bogies, String key) {
 
-    public static boolean binarySearch(String[] arr, String key) {
+        // ✅ Fail-fast validation
+        if (bogies == null || bogies.length == 0) {
+            throw new IllegalStateException("No bogies available in train consist. Search not allowed.");
+        }
 
-        // Step 1: Ensure sorted input (important requirement)
-        Arrays.sort(arr);
-
-        int low = 0;
-        int high = arr.length - 1;
-
-        // Step 2: Binary Search loop
-        while (low <= high) {
-
-            int mid = (low + high) / 2;
-
-            int result = key.compareTo(arr[mid]);
-
-            if (result == 0) {
-                return true; // found
-            }
-            else if (result > 0) {
-                low = mid + 1; // search right half
-            }
-            else {
-                high = mid - 1; // search left half
+        // Linear search (can also be binary if sorted, but UC20 focuses on validation)
+        for (String b : bogies) {
+            if (b.equals(key)) {
+                return true;
             }
         }
 
-        return false; // not found
+        return false;
     }
 
     public static void main(String[] args) {
 
-        String[] bogieIds = {
-                "BG309",
-                "BG101",
-                "BG550",
-                "BG205",
-                "BG412"
-        };
+        // Case 1: Empty array (will throw exception)
+        String[] bogies = {};
 
-        String searchKey = "BG205";
+        String searchKey = "BG101";
 
-        boolean found = binarySearch(bogieIds, searchKey);
+        try {
+            boolean result = searchBogie(bogies, searchKey);
 
-        if (found) {
-            System.out.println("Bogie ID " + searchKey + " FOUND in train consist.");
-        } else {
-            System.out.println("Bogie ID " + searchKey + " NOT FOUND in train consist.");
+            if (result) {
+                System.out.println("Bogie " + searchKey + " FOUND.");
+            } else {
+                System.out.println("Bogie " + searchKey + " NOT FOUND.");
+            }
+
+        } catch (IllegalStateException e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
+
+        System.out.println("Program continues safely...");
     }
 }
