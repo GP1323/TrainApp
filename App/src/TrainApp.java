@@ -1,6 +1,7 @@
 import java.util.*;
+import java.util.stream.*;
 
-// Bogie class (custom object)
+// Bogie class
 class Bogie {
     String name;
     int capacity;
@@ -22,28 +23,25 @@ public class TrainApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Create List of bogies
+        // Original list (same as UC7)
         List<Bogie> bogies = new ArrayList<>();
-
-        // Add bogies
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 40));
 
-        // Sort by capacity (ascending)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // Filter bogies with capacity > 60
+        List<Bogie> filtered = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        System.out.println("\nBogies sorted by capacity (Ascending):");
-        for (Bogie b : bogies) {
+        // Display filtered bogies
+        System.out.println("\nFiltered Bogies (capacity > 60):");
+        for (Bogie b : filtered) {
             System.out.println(b);
         }
 
-        // Sort by capacity (descending)
-        bogies.sort(Comparator.comparingInt((Bogie b) -> b.capacity).reversed());
-
-        System.out.println("\nBogies sorted by capacity (Descending):");
-        for (Bogie b : bogies) {
-            System.out.println(b);
-        }
+        // Show original list unchanged
+        System.out.println("\nOriginal List:");
+        System.out.println(bogies);
     }
 }
