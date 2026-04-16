@@ -1,32 +1,54 @@
-public class TrainAppUC18 {
-    public static void main(String[] args) {
+import java.util.Arrays;
 
-        // Bogie IDs (unsorted array)
-        String[] bogieIds = {
-                "BG101",
-                "BG205",
-                "BG309",
-                "BG412",
-                "BG550"
-        };
+public class TrainAppUC19 {
 
-        // Search key
-        String searchKey = "BG309";
+    public static boolean binarySearch(String[] arr, String key) {
 
-        boolean found = false;
+        // Step 1: Ensure sorted input (important requirement)
+        Arrays.sort(arr);
 
-        // Linear Search
-        for (int i = 0; i < bogieIds.length; i++) {
+        int low = 0;
+        int high = arr.length - 1;
 
-            if (bogieIds[i].equals(searchKey)) {
-                found = true;
-                System.out.println("Bogie " + searchKey + " FOUND at index " + i);
-                break; // early termination
+        // Step 2: Binary Search loop
+        while (low <= high) {
+
+            int mid = (low + high) / 2;
+
+            int result = key.compareTo(arr[mid]);
+
+            if (result == 0) {
+                return true; // found
+            }
+            else if (result > 0) {
+                low = mid + 1; // search right half
+            }
+            else {
+                high = mid - 1; // search left half
             }
         }
 
-        if (!found) {
-            System.out.println("Bogie " + searchKey + " NOT FOUND");
+        return false; // not found
+    }
+
+    public static void main(String[] args) {
+
+        String[] bogieIds = {
+                "BG309",
+                "BG101",
+                "BG550",
+                "BG205",
+                "BG412"
+        };
+
+        String searchKey = "BG205";
+
+        boolean found = binarySearch(bogieIds, searchKey);
+
+        if (found) {
+            System.out.println("Bogie ID " + searchKey + " FOUND in train consist.");
+        } else {
+            System.out.println("Bogie ID " + searchKey + " NOT FOUND in train consist.");
         }
     }
 }
